@@ -20,7 +20,7 @@
 using namespace std;
 #include "DatosPaciente.h"
 
-// Instanciando objetos de la clase Mujer y Hombre para el avance (ejemplos)
+// Instanciando objetos de la clase Mujer y Hombre para el avance (ejemplos).
 
 int main(){
     
