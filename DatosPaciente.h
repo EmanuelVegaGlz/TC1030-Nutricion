@@ -15,6 +15,8 @@
 
 #include<string>
 #include<math.h>
+#include "menu.h"
+
 using namespace std;
 
 // Declaracion de la clase DatosPaciente (clase padre)
@@ -26,7 +28,9 @@ class DatosPaciente{
     // Atributos de la clase
     float peso, talla, imc, reqEnergia, actFisica;
     int edad;
-    string nombre, objetivo, correo, numero;
+    string nombre, objetivo, correo, numero, cita;
+    Menu *dieta[5];
+    int numDieta;
 
   public:
 
@@ -41,6 +45,9 @@ class DatosPaciente{
     string getNombre();
     string getObjetivo();
     string getCorreo();
+    string getCita();
+    Menu getDieta();
+    
     
     void setPeso(float);
     void setTalla(float);
@@ -52,6 +59,9 @@ class DatosPaciente{
     void setNombre(string);
     void setObjetivo(string);
     void setCorreo(string);
+    void setCita(string);
+    void agregaDieta(Menu*);
+    void imprimirDieta();
 
     //Constructores
     
@@ -59,11 +69,12 @@ class DatosPaciente{
      * Constructor por default
      *
      * @param
-     * @return Objeto Auto
+     * @return Objeto DatosPaciente
      */
 
     DatosPaciente():peso(0), talla(0), imc(0), reqEnergia(0), actFisica(0),
-      edad(0), numero(""), nombre(""), objetivo(""), correo(""){};
+                    edad(0), numero(""), nombre(""), objetivo(""), correo(""),
+                    cita(""),dieta(),numDieta(0){};
     
     /**
      * Constructor donde recibe valores para llenar los atributos
@@ -78,7 +89,8 @@ class DatosPaciente{
     DatosPaciente(float pes, float ta, int eda, string num, string nom,
                     string obj, string corr):peso(pes), talla(ta),
                     imc(0), reqEnergia(0), actFisica(0), edad(eda),
-                    numero(num), nombre(nom), objetivo(obj), correo(corr){};
+                    numero(num), nombre(nom), objetivo(obj), correo(corr),
+                    cita(""),dieta(),numDieta(0){};
 };
 
 //Getters
@@ -183,6 +195,26 @@ string DatosPaciente::getCorreo(){
   return correo;
 }
 
+/**
+ * getter cita
+ *
+ * @param
+ * @return string: Cita del paciente
+*/
+string DatosPaciente::getCita(){
+  return cita;
+}
+
+/**
+ * getter dieta
+ *
+ * @param
+ * @return Menu: Dieta del paciente
+*/
+Menu DatosPaciente::getDieta(){
+  return *dieta[numDieta];
+}
+
 //Setters
 
 /**
@@ -266,10 +298,48 @@ void DatosPaciente::setCorreo(string co){
 }
 
 /**
+ * setter cita
+ *
+ * @param
+ * @return
+*/
+void DatosPaciente::setCita(string ci){
+    cita = ci;
+}
+
+/**
+ * agregar dieta
+ * 
+ * @param Menu: Dieta que se le agrega al paciente
+ * @return
+ */
+void DatosPaciente::agregaDieta(Menu *d){
+    dieta[numDieta] = d;
+    numDieta++;
+}
+
+/**
+ * imprimir dieta del paciente
+ * 
+ * @param
+ * @return
+ */
+void DatosPaciente::imprimirDieta(){
+    for(int i=0;i<numDieta;i++){
+        cout << "Dieta " << i+1 << endl;
+        cout << "Calorias: " << dieta[i]->getCalorias() << endl;
+        cout << "Platillos: " << endl;
+        for(int j=0;j<5;j++){
+            cout << dieta[i]->getPlatillos(j) << endl;
+        }
+    }
+}
+
+/**
  * Clase Mujer, que es la clase hija de DatosPaciente     
  */
 
-class Mujer: public DatosPaciente{
+class Mujer : public DatosPaciente{
 
   public:
 
@@ -291,7 +361,7 @@ class Mujer: public DatosPaciente{
     * @return Objeto DatosPaciente
     */
     Mujer(float pes, float ta, int eda, string num, string nom, string obj, 
-            string corr):DatosPaciente(pes, ta, eda, num, nom, obj, corr){};
+           string corr):DatosPaciente(pes, ta, eda, num, nom, obj, corr){};
     
     /**
     * setter reqEnergia
@@ -299,7 +369,7 @@ class Mujer: public DatosPaciente{
     * @param
     * @return
     */
-    void setReqEnergia()override{
+    void setReqEnergia(){
         reqEnergia = 354-(6.91*edad)+(actFisica*(9.36*peso+726*talla));
     }
 
@@ -309,7 +379,7 @@ class Mujer: public DatosPaciente{
     * @param
     * @return
     */
-    void setActFisica(int act)override{
+    void setActFisica(int act){
         if(act == 1)
         actFisica = 1;
         if(act == 2)
@@ -333,7 +403,7 @@ class Hombre: public DatosPaciente{
     * Constructor por default
     *
     * @param
-    * @return Objeto Sedan
+    * @return
     */
     Hombre():DatosPaciente(){}
 

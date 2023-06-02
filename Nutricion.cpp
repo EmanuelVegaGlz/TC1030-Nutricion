@@ -19,17 +19,20 @@
 #include <string>        // Tipo de dato string
 using namespace std;
 #include "DatosPaciente.h"
+#include "DirectorioPacientes.h"
 
-// Instanciando objetos de la clase Mujer y Hombre para el avance (ejemplos).
+// Instanciando objetos de la clase Mujer y Hombre para el avance.
 
 int main(){
-    
-    Mujer juanita;
-    juanita.setNombre("Juana Lopez Hernandez");
-    juanita.setEdad(45);
-    juanita.setPeso(89.8);
-    juanita.setTalla(1.45);
-    juanita.setImc();
+
+    //Ejemplos para el avance
+   
+    DatosPaciente *juanita = new Mujer();
+    juanita->setNombre("Juana Gutierrez");
+    juanita->setEdad(19);
+    juanita->setPeso(50);
+    juanita->setTalla(1.65);
+    juanita->setImc();
     cout << "Ingresa el numero por el tipo de actividad del paciente"<<endl
          << "1: sedentaria"<<endl
          << "2: poco activa"<<endl
@@ -37,40 +40,44 @@ int main(){
          << "4: muy activa"<<endl<<endl;
     int actividad;
     cin >> actividad;
-    juanita.setActFisica(actividad);
-    juanita.setReqEnergia();
-    juanita.setNumero("5566778899");   
-    juanita.setObjetivo("Bajar de peso");
-    juanita.setCorreo("juanita@gmail.com");
+    juanita->setActFisica(actividad);
+    juanita->setReqEnergia();
+    juanita->setNumero("5566778899");   
+    juanita->setObjetivo("Bajar de peso");
+    juanita->setCorreo("juanita@gmail.com");
 
-    Hombre juanito(70.5, 1.98, 19, "4424423451", "Juan Delgado", "Estar sano", 
-            "juanito78900@hotmail.com");
-    juanito.setActFisica(2);
-    juanito.setImc();
-    juanito.setReqEnergia();
+    // Crear objeto de la clase Hombre
+     DatosPaciente *juanito = new Hombre(70.5, 1.98, 19, "4424423451", 
+                                        "Juan Delgado", "Estar sano", 
+                                        "juanito78900@hotmail.com");
+
+    juanito->setActFisica(2);
+    juanito->setImc();
+    juanito->setReqEnergia();
     
-    //Datos del paciente
-    cout << "Nombre: "<< juanita.getNombre()<<endl
-         << "Peso (kg): " << juanita.getPeso()<<endl
-         << "Estatura (m): " << juanita.getTalla()<<endl
-         << "IMC: " << juanita.getImc()<<endl
-         << "Req. Energetico Estimado (Kcal): " <<juanita.getReqEnergia()<<endl
-         << "Actividad fisica: " << juanita.getActFisica()<<endl
-         << "Edad: " << juanita.getEdad()<<endl
-         << "Numero celular: " << juanita.getNumero()<<endl
-         << "Objetivo del paciente: " << juanita.getObjetivo()<<endl
-         << "Correo electronico: " << juanita.getCorreo()<<endl<<endl;
+     // Crear un objeto de la clase Menu (ejemplo).
+     Menu *menu1 = new Menu(1500, "Ensalada de pollo", "Sopa de verduras",
+                            "Pescado a la plancha", "Pechuga de pollo", 
+                            "Ensalada de atún");
+     Menu *menu2 = new Menu(2000, "Enchiladas", "Arroz", "Mango",
+                            "Frijoles charros", "Tacos al pastor");
 
-    cout << "Nombre: "<< juanito.getNombre()<<endl
-         << "Peso (kg): " << juanito.getPeso()<<endl
-         << "Estatura (m): " << juanito.getTalla()<<endl
-         << "IMC: " << juanito.getImc()<<endl
-         << "Req. Energetico Estimado (Kcal): " <<juanito.getReqEnergia()<<endl
-         << "Actividad fisica: " << juanito.getActFisica()<<endl
-         << "Edad: " << juanito.getEdad()<<endl
-         << "Numero celular: " << juanito.getNumero()<<endl
-         << "Objetivo del paciente: " << juanito.getObjetivo()<<endl
-         << "Correo electronico: " << juanito.getCorreo()<<endl<<endl;
+     // Agregar los menús al arreglo de menús del paciente.
+     juanita->agregaDieta(menu1);
+     juanita->agregaDieta(menu2);
 
-    return 0;
-}
+     // Crear un objeto de la clase DirectorioPacientes (ejemplo).
+     DirectorioPacientes directorio;
+
+     // Agregar los pacientes al directorio.
+
+     directorio.agregarPaciente(juanita);
+     directorio.agregarPaciente(juanito);
+
+     // Mostrar los pacientes del directorio.
+
+     directorio.mostrarPacientes();
+
+     return 0;
+
+};
