@@ -36,6 +36,7 @@ class DirectorioPacientes{
 
     void agregarPaciente(DatosPaciente *);
     void mostrarPacientes();
+    void mostrarPacientes(int);
     
 };
 
@@ -64,7 +65,8 @@ void DirectorioPacientes::agregarPaciente(DatosPaciente *paciente){
 void DirectorioPacientes::mostrarPacientes(){
     for (int i=0;i<100;i++){
         if(listaPacientes[i] != nullptr){
-            cout << "Nombre: " << listaPacientes[i]->getNombre() << endl
+            cout << "Numero de paciente: " << i+1 << endl << endl
+                 << "Nombre: " << listaPacientes[i]->getNombre() << endl
                  << "Edad: " << listaPacientes[i]->getEdad() << endl
                  << "Peso: " << listaPacientes[i]->getPeso() << endl
                  << "Talla: " << listaPacientes[i]->getTalla() << endl
@@ -81,5 +83,30 @@ void DirectorioPacientes::mostrarPacientes(){
         }
     }
 }
+
+/**
+ * Muestra un paciente del directorio
+ * 
+ * @param int i
+ * @return
+ */
+void DirectorioPacientes::mostrarPacientes(int i){
+    cout << "Numero de paciente: " << i+1 << endl << endl
+         << "Nombre: " << listaPacientes[i]->getNombre() << endl
+         << "Edad: " << listaPacientes[i]->getEdad() << endl
+         << "Peso: " << listaPacientes[i]->getPeso() << endl
+         << "Talla: " << listaPacientes[i]->getTalla() << endl
+         << "IMC: " << listaPacientes[i]->getImc() << endl
+         << "Requerimiento energetico: " 
+         << listaPacientes[i]->getReqEnergia() << endl
+         << "Actividad fisica: " << listaPacientes[i]->getActFisica() 
+         << endl
+         << "Numero: " << listaPacientes[i]->getNumero() << endl
+         << "Objetivo: " << listaPacientes[i]->getObjetivo() << endl
+         << "Correo: " << listaPacientes[i]->getCorreo() << endl
+         << "Cita: " << listaPacientes[i]->getCita() << endl 
+         << endl << endl;
+}
+
 
 #endif

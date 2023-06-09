@@ -15,6 +15,7 @@
 
 #include<string>
 #include<math.h>
+#include<iostream>
 #include "menu.h"
 
 using namespace std;
@@ -62,11 +63,15 @@ class DatosPaciente{
     void setCita(string);
     void agregaDieta(Menu*);
     void imprimirDieta();
+    void imprimirDieta(int);
 
     //Constructores
     
     /**
      * Constructor por default
+     * Sirve para poder crear el arreglo en el directorio y poder determinar
+     * la memoria necesaria. Se usaria para crear un objeto vacio y despues 
+     * el doctor llenarlo con los setters.
      *
      * @param
      * @return Objeto DatosPaciente
@@ -77,7 +82,7 @@ class DatosPaciente{
                     cita(""),dieta(),numDieta(0){};
     
     /**
-     * Constructor donde recibe valores para llenar los atributos
+     * Constructor donde recibe valores para llenar los atributos.
      *
      * @param float pes: Peso del paciente, float ta: Talla del paciente,
      * int eda: Edad del paciente, int num: Numero celular del paciente,
@@ -332,6 +337,21 @@ void DatosPaciente::imprimirDieta(){
         for(int j=0;j<5;j++){
             cout << dieta[i]->getPlatillos(j) << endl;
         }
+    }
+}
+
+/**
+ * imprimir un platillo de la dieta del paciente
+ * 
+ * @param int: Platillo que se quiere imprimir de los 5 que conforma el menu
+ * @return
+ */
+void DatosPaciente::imprimirDieta(int plat){
+    for(int i=0;i<numDieta;i++){
+    cout << "Dieta " << i+1 << endl;
+    cout << "Calorias: " << dieta[i]->getCalorias() << endl;
+    cout << "Platillo: " << plat << endl;
+    cout << dieta[i]->getPlatillos(plat) << endl;
     }
 }
 
