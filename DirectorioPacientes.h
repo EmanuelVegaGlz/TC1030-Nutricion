@@ -21,10 +21,10 @@ using namespace std;
 
 class DirectorioPacientes{
   private:
-    DatosPaciente *listaPacientes[100];
     int numPacientes;
 
   public:
+    DatosPaciente *listaPacientes[100];
     DirectorioPacientes():listaPacientes(),numPacientes(0){};
 
     DirectorioPacientes(DatosPaciente *pacientes[100]):
@@ -37,6 +37,7 @@ class DirectorioPacientes{
     void agregarPaciente(DatosPaciente *);
     void mostrarPacientes();
     void mostrarPacientes(int);
+    int getNumPacientes(){return numPacientes;};
     
 };
 
