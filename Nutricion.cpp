@@ -15,22 +15,14 @@
 
 #include <iostream>                // Para entradas y salidas
 #include <string>                  // Tipo de dato string
+#include <sstream>                 // Para cadenas de strings
+#include <unistd.h>                // Para funciones con el SO (sleep)
 #include "DatosPaciente.h"         // Clase DatosPaciente
 #include "DirectorioPacientes.h"   // Clase DirectorioPacientes
 #include "menu.h"                  // Clase Menu
+#include "funciones.h"             // Funciones
 
 using namespace std;
-
-int validarOpcion(int opcion, int min, int max){
-     while(opcion < min || opcion > max)
-     {
-          cout << "Opcion invalida" << endl
-               << "Ingresa el numero de la opcion que deseas realizar: "
-               << endl;
-          cin >> opcion;
-     }
-     return opcion;
-}
 
 int main(){
 
@@ -39,7 +31,7 @@ int main(){
 
      /*
       * Creando objetos de la clase Mujer y Hombre haciendo uso de 
-      * polimorfismo y sobrecarca, en donde se crea un objeto vacio
+      * polimorfismo y sobrecarga, en donde se crea un objeto vacio
       * (mediante un constructor por default) y despues se le asignan
       * valores a sus atributos mediante los modificadores de acceso.
       * El otro objeto se instancia con un constructor que recibe parametros
@@ -63,19 +55,27 @@ int main(){
      DatosPaciente *juanito = new Hombre(70.5, 1.98, 19, "4424423451",
                                         "Juan Delgado", "Estar sano",
                                         "juanito78900@hotmail.com");
-
      juanito->setActFisica(2);
      juanito->setImc();
      juanito->setReqEnergia();
 
-     // Crear un objeto de la clase Menu (ejemplo)
-     Menu *menu1 = new Menu(1500, "Ensalada de pollo", "Sopa de verduras",
-                              "Pescado a la plancha", "Pechuga de pollo", 
-                              "Ensalada de atún");
-     Menu *menu2 = new Menu(2000, "Enchiladas", "Arroz", "Mango",
-                              "Frijoles charros", "Tacos al pastor");
+     // Crear objetos de la clase Menu (ideas de dietas)
+     Menu *menu1 = new Menu(1500, 
+                            "Desayuno: Licuado de fresa y huevos revueltos",
+                            "Colacion: Manzana",
+                            "Comida: Sopa de verduras, filete de pescado",
+                            "Colacion: Amaranto", 
+                            "Cena: Hot cakes de avenas");
 
-     // Crear un arreglo de objetos de la clase Menu
+     Menu *menu2 = new Menu(2000, 
+                            "Desayuno: Jugo de naranja y sandwich de jamon",
+                            "Colacion: Uvas y nueces de la india",
+                            "Comida: Arroz, pollo a la plancha y ensalada",
+                            "Colacion: Palomitas de maiz caseras", 
+                            "Cena: Tostadas horneadas con aguacate y queso");
+
+
+     // Arreglo de objetos de la clase Menu para asignarle a los pacientes
      Menu * listaMenus[25];
      listaMenus[0] = menu1;
      listaMenus[1] = menu2;
@@ -92,19 +92,11 @@ int main(){
      directorio.agregarPaciente(juanita);
      directorio.agregarPaciente(juanito);
 
-     // Mensaje de bienvenida
-     cout << "Bienvenida Dra. al programa de nutricion" << endl
-          << "En el que cuentas con un directorio de tus paciente" << endl
-          << "El programa calculara el IMC y el REE de tus pacientes" << endl
-          << "Tambien podras agendar citas y proporcionarles menus" << endl
-          << "Ingresa el numero de la opcion que deseas realizar" << endl
-          << endl
-          << "1: Ver el directorio de pacientes" << endl
-          << "2: Agendarle una cita a un paciente" << endl
-          << "3: Agregar paciente al directorio" << endl
-          << "4: Proporcionarle menus a tus pacientes" << endl << endl;
+     // Mensaje de bienvenida y opciones que tiene el usuario
+     mensajeBienvenida();
+     imprimirOpciones();
+     cout << "IMPORTANTE: Solo ingresar numeros" << endl;
      
-
      int opcion;
      cin >> opcion;
      opcion = validarOpcion(opcion, 1, 5);
@@ -115,7 +107,7 @@ int main(){
           {
                case 1:{
                     // Ver el directorio de pacientes
-                    directorio.mostrarPacientes();    
+                    directorio.mostrarPacientes();
                
                break;
                }
@@ -124,71 +116,93 @@ int main(){
                     // Agendarle una cita a un paciente
                     cout << "Estos son los pacientes que tienes registrados"
                          << endl;
-
+                    sleep(1);
                     directorio.mostrarPacientes();
 
                     cout << "Ingresa el numero de paciente para agendar cita:"
                          << endl;
-
+                    aviso();
                     int num;
                     cin >> num;
                     num = validarOpcion(num, 1, directorio.getNumPacientes());
 
                     cout << "Ingresa la fecha de la cita" << endl;
                     string fecha;
-                    getline(cin, fecha); 
+                    getline(cin >> ws, fecha);
 
                     cout << "Escribe el motivo de la cita" << endl;
                     string motivo;
-                    getline(cin, motivo);
+                    getline(cin >> ws, motivo);
 
-                    break;
+                    stringstream aux;
+                    aux << "Cita:" << endl << endl
+                        << "Fecha: " << fecha << endl
+                        << "Motivo: " << motivo << endl;
                     
+                    
+                    string cita = aux.str();
+                    directorio.listaPacientes[num-1]->setCita(cita);
+
+                    cout << "Cita agendada exitosamente" << endl;
+                    sleep(1);
+                    cout << "Este es el resumen de su cita: " << endl << endl;
+                    sleep(1);
+                    cout << "Paciente: " 
+                         << directorio.listaPacientes[num-1]->getNombre() 
+                         << endl
+                         << directorio.listaPacientes[num-1]->getCita()
+                         << endl
+                         << "Contacto: " << endl << "Celular: "
+                         << directorio.listaPacientes[num-1]->getNumero()
+                         << endl << "Correo: "
+                         << directorio.listaPacientes[num-1]->getCorreo()
+                         << endl;
+                    sleep(1);
+
+               break;   
                }
 
                case 3:{
                     // Agregar paciente al directorio
-                    cout << "Ingresa el nombre del paciente" << endl;
+                    cout << "Ingresa el nombre del paciente:" << endl;
                     string nombre;
-                    getline(cin, nombre);
+                    getline(cin >> ws, nombre);
 
-                    cout << "Ingresa la edad del paciente" << endl;
+                    cout << "Ingresa la edad del paciente:" << endl;
+                    aviso();
                     int edad;
                     cin >> edad;
 
-                    cout << "Ingresa el peso del paciente" << endl;
+                    cout << "Ingresa el peso del paciente en kg:" << endl;
+                    aviso();
                     float peso;
                     cin >> peso;
 
-                    cout << "Ingresa la talla del paciente" << endl;
+                    cout << "Ingresa la talla del paciente en m:" << endl;
+                    aviso();
                     float talla;
                     cin >> talla;
 
-                    cout << "Ingresa el numero celular del paciente" << endl;
+                    cout << "Ingresa el numero celular del paciente:" << endl;
                     string numero;
-                    getline(cin, numero);
+                    getline(cin >> ws, numero);
 
-                    cout << "Ingresa el e-mail del paciente" << endl;
+                    cout << "Ingresa el e-mail del paciente:" << endl;
                     string correo;
-                    getline(cin, correo);
+                    getline(cin >> ws, correo);
 
-                    cout << "Ingresa el objetivo del paciente" << endl;
+                    cout << "Ingresa el objetivo del paciente:" << endl;
                     string objetivo;
-                    getline(cin, objetivo);
+                    getline(cin >> ws, objetivo);
 
-                    cout << "Ingresa el tipo de actividad fisica del paciente"
-                         << endl
-                         << "1: Sedentaria" << endl
-                         << "2: Poco activa" << endl
-                         << "3: Activa" << endl
-                         << "4: Muy activa" << endl;
+                    mensajeActFisica();
+                    aviso();
                     int actFisica;
                     cin >> actFisica;
                     actFisica = validarOpcion(actFisica, 1, 4);
-                    cout << "Ingresa la opcion para el sexo del paciente"
-                         << endl
-                         << "1: Mujer" << endl
-                         << "2: Hombre" << endl;
+
+                    mensajeSexoPaciente();
+                    aviso();
                     int genero;
                     cin >> genero;
                     if (genero == 1)
@@ -220,18 +234,23 @@ int main(){
                          directorio.agregarPaciente(paciente);
                     }
                     
-                    break;
+                    cout << "Paciente agregado exitosamente" << endl
+                         << "Resumen del paciente agregado:" << endl;
+                    directorio.mostrarPacientes(directorio.getNumPacientes()
+                                                -1);
+               break;
                }
 
                case 4:{
                     // Proporcionarle menus a tus pacientes
                     cout << "Estos son los pacientes que tienes registrados"
                          << endl;
+                    sleep(1);
 
                     directorio.mostrarPacientes();
 
-                    cout << "Ingresa el numero de paciente para"
-                         << " proporcionarle menus:" << endl;
+                    cout << "Ingresa el numero de paciente para" << endl
+                         << "proporcionarle menus:" << endl;
 
                     int numPaciente;
                     cin >> numPaciente;
@@ -240,25 +259,23 @@ int main(){
 
                     cout << "Estos son los menus que tienes registrados"
                          << endl;
+                    sleep(1);
                     
                     for (int i = 0; i < indiceMenu; i++)
                     {
-                         cout << i+1 << ": " << listaMenus[i]->getPlatillos()
+                         cout << i+1 << ".- "<<endl 
+                              << listaMenus[i]->getPlatillos()
                               << endl << endl;
                     }
 
-                    cout << "Desea agrear alguno de estos menus" << endl
-                         << "al paciente o desea crear un menu:" << endl
-                         << "1: Agregar un menu existente" << endl
-                         << "2: Crear un menu" << endl;
-                    
+                    mensajeOpcionesMenu();                    
                     int opcionMenu;
                     cin >> opcionMenu;
                     opcionMenu = validarOpcion(opcionMenu, 1, 2);
 
                     if (opcionMenu == 1)
                     {
-                         cout << "Ingresa numero del menu que deseas agregar"
+                         cout << "Ingresa numero del menu que deseas agregar:"
                               << endl;
                          int numMenu;
                          cin >> numMenu;
@@ -272,9 +289,8 @@ int main(){
                          string platillos[5];
                          for (int i = 0; i < 5; i++)
                          {
-                              cout << "Ingresa el nombre del platillo" 
-                                   << endl;
-                              getline(cin, platillos[i]);
+                              cout << "Ingresa el platillo " << i+1 << endl;
+                              getline(cin >> ws, platillos[i]);
                          }
 
                          cout << "Ingresa el numero de calorias del menu"
@@ -287,20 +303,20 @@ int main(){
                          agregaDieta(menu);
                     }
 
-                    break;
-                    
+                    cout << "Menu agregado exitosamente" << endl
+                         << "Su paciente " <<
+                         directorio.listaPacientes[numPaciente-1]->getNombre()
+                         << "cuenta con el siguiente menu: " << endl;
+                    directorio.listaPacientes[numPaciente-1]->imprimirDieta();
+                    cout << endl << endl;
+                         
+               break;  
                }
           }
-          cout << "Que mas deseas hacer" << endl << endl
-                         << "1: Ver el directorio de pacientes" << endl
-                         << "2: Agendarle una cita a un paciente" << endl
-                         << "3: Agregar paciente al directorio" << endl
-                         << "4: Proporcionarle menus a tus pacientes" << endl
-                         << "Otro numero: Salir del programa" 
-                         << endl;          
-                    cin >> opcion;
+          cout << "Que mas deseas hacer" << endl << endl;
+          imprimirOpciones();
+          cout << "Otro numero: Salir del programa" << endl;          
+          cin >> opcion;
      }
-
      return 0;
-
 };

@@ -4,9 +4,7 @@
  * Profesor: Benjamín Valdés Aguirre.
  * Nombre: Emanuel Josué Vega González.
  * ID: A01710366.
- */
-
-/*
+ *
  * Clase abstracta DatosPaciente, que es la clase padre de Hombre y Mujer     
  */
 
@@ -17,6 +15,7 @@
 #include<math.h>
 #include<iostream>
 #include "menu.h"
+
 
 using namespace std;
 
@@ -54,7 +53,7 @@ class DatosPaciente{
     void setTalla(float);
     void setImc();
     virtual void setReqEnergia() = 0;
-    virtual void setActFisica (int) = 0;
+    virtual void setActFisica(int) = 0;
     void setEdad(int);
     void setNumero(string);
     void setNombre(string);
@@ -319,8 +318,14 @@ void DatosPaciente::setCita(string ci){
  * @return
  */
 void DatosPaciente::agregaDieta(Menu *d){
-    dieta[numDieta] = d;
-    numDieta++;
+    if (numDieta <= 5){
+      dieta[numDieta] = d;
+      numDieta++;
+    }
+    else{
+      cout << "El paciente ya tiene 5 dietas" << endl;
+    }  
+    
 }
 
 /**
@@ -337,6 +342,7 @@ void DatosPaciente::imprimirDieta(){
         for(int j=0;j<5;j++){
             cout << dieta[i]->getPlatillos(j) << endl;
         }
+        sleep(1);
     }
 }
 

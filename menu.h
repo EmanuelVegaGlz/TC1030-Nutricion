@@ -4,9 +4,7 @@
  * Profesor: Benjamín Valdés Aguirre.
  * Nombre: Emanuel Josué Vega González.
  * ID: A01710366.
- */
-
-/*
+ * 
  * Clase Menu
  */
 
