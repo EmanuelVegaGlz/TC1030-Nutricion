@@ -57,10 +57,10 @@ void imprimirOpciones(){
 void mensajeBienvenida(){
     cout << "Bienvenida Dra. al nutri programa" << endl << endl
          << "En el que cuentas con un directorio de tus paciente" << endl
-         << "el programa calculara el IMC y el REE de tus pacientes," << endl
-         << "tambien podras agendar citas y proporcionarles menus" << endl
-         << "de igual manera crear nuevos menus y agregar pacientes" << endl
-         << endl
+         << "el programa calcula tanto IMC como REE de tus pacientes," << endl
+         << "tambien podras agendar citas asi como proporcionarles menus" << endl
+         << "de igual manera crear nuevos menus y agregar pacientes" 
+         << endl << endl
          << "Ingresa el numero de la opcion que deseas realizar" << endl
          << endl;
 }

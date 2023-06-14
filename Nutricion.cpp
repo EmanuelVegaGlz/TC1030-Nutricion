@@ -261,12 +261,16 @@ int main(){
                     cout << "Estos son los menus que tienes registrados"
                          << endl;
                     sleep(1);
-                    
+                    struct timespec pause;
+                    pause.tv_sec = 0;
+                    pause.tv_nsec = 300000000;
                     for (int i = 0; i <= indiceMenu; i++)
                     {
-                         cout << i+1 << ".- "<<endl 
-                              << listaMenus[i]->getPlatillos()
+                         cout << i+1 << ".- "<<endl;
+                         nanosleep(&pause, NULL); 
+                         cout << listaMenus[i]->getPlatillos()
                               << endl << endl;
+                         nanosleep(&pause, NULL);
                     }
 
                     mensajeOpcionesMenu();                    
@@ -339,12 +343,13 @@ int main(){
                          directorio.listaPacientes[numPaciente-1]->
                          agregaDieta(menu);
                          listaMenus[indiceMenu+1] = menu;
+                         indiceMenu++;
                     }
 
                     cout << "Menu agregado exitosamente" << endl
                          << "Su paciente " <<
                          directorio.listaPacientes[numPaciente-1]->getNombre()
-                         << "cuenta con el siguiente menu: " << endl;
+                         << " cuenta con el siguiente menu: " << endl;
                     directorio.listaPacientes[numPaciente-1]->imprimirDieta();
                     cout << endl << endl;
                          

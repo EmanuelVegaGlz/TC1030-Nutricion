@@ -79,7 +79,7 @@ class DatosPaciente{
 
     DatosPaciente():peso(0), talla(0), imc(0), reqEnergia(0), actFisica(0),
                     edad(0), numero(""), nombre(""), objetivo(""), correo(""),
-                    cita(""),dieta(),numDieta(0){};
+                    cita("Sin citas"),dieta(),numDieta(0){};
     
     /**
      * Constructor donde recibe valores para llenar los atributos.
@@ -336,12 +336,19 @@ void DatosPaciente::agregaDieta(Menu *d){
  * @return
  */
 void DatosPaciente::imprimirDieta(){
+    struct timespec pause;
+    pause.tv_sec = 0;
+    pause.tv_nsec = 300000000;
     for(int i=0;i<numDieta;i++){
         cout << "Dieta " << i+1 << endl;
+        nanosleep(&pause, NULL);
         cout << "Calorias: " << dieta[i]->getCalorias() << endl;
+        nanosleep(&pause, NULL);
         cout << "Platillos: " << endl;
+        nanosleep(&pause, NULL);
         for(int j=0;j<5;j++){
             cout << dieta[i]->getPlatillos(j) << endl;
+            nanosleep(&pause, NULL);
         }
         sleep(1);
     }
