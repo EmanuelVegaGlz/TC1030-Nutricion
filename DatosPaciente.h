@@ -14,6 +14,7 @@
 #include<string>
 #include<math.h>
 #include<iostream>
+#include<unistd.h>
 #include "menu.h"
 
 
@@ -94,7 +95,7 @@ class DatosPaciente{
                     string obj, string corr):peso(pes), talla(ta),
                     imc(0), reqEnergia(0), actFisica(0), edad(eda),
                     numero(num), nombre(nom), objetivo(obj), correo(corr),
-                    cita(""),dieta(),numDieta(0){};
+                    cita("Sin citas"),dieta(),numDieta(0){};
 };
 
 //Getters

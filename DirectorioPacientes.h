@@ -5,7 +5,8 @@
  * Nombre: Emanuel Josué Vega González.
  * ID: A01710366.
  *
- * Clase Directorio Pacientes
+ * Clase Directorio Pacientes, en esta clase se hace la agregacion
+ * de los pacientes.
  */
 
 #ifndef DIRECTORIO_PACIENTES_H_
@@ -13,6 +14,7 @@
 #include <iostream>
 #include <string>
 #include <unistd.h>
+#include <time.h>
 #include "DatosPaciente.h"
 
 using namespace std;
@@ -21,12 +23,34 @@ using namespace std;
 
 class DirectorioPacientes{
   private:
+    // Atributo de la clase
     int numPacientes;
 
   public:
+    /* 
+     * Atributo de la clase, arreglo de apuntadores de objetos de la clase
+     * DatosPaciente, es publico para facilitar el acceso a los datos, sin
+     * embargo, cada apuntador se modifica usando metodos de acceso. 
+    */
     DatosPaciente *listaPacientes[100];
+
+    // Metodos de la clase
+
+    /**
+     * Constructor por default
+     * 
+     * @param
+     * @return
+     */
     DirectorioPacientes():listaPacientes(),numPacientes(0){};
 
+    /**
+     * Constructor con parametros que recibe un arreglo de apuntadores de objetos
+     * de la clase DatosPaciente
+     * 
+     * @param DatosPaciente *pacientes[100]
+     * @return
+     */
     DirectorioPacientes(DatosPaciente *pacientes[100]):
         numPacientes(100){
         for(int i=0;i<100;i++){
@@ -37,7 +61,7 @@ class DirectorioPacientes{
     void agregarPaciente(DatosPaciente *);
     void mostrarPacientes();
     void mostrarPacientes(int);
-    int getNumPacientes(){return numPacientes;};
+    int getNumPacientes();
     void cambiarDietaPaciente(int i, Menu *dieta);
     
 };
@@ -49,13 +73,8 @@ class DirectorioPacientes{
  * @return
  */
 void DirectorioPacientes::agregarPaciente(DatosPaciente *paciente){
-    for (int i=0;i<100;i++){
-        if(listaPacientes[i] == nullptr){
-            listaPacientes[i] = paciente;
-            numPacientes++;
-            break;
-        }
-    }
+    listaPacientes[numPacientes]=paciente;
+    numPacientes++;
 }
 
 /**
@@ -65,25 +84,37 @@ void DirectorioPacientes::agregarPaciente(DatosPaciente *paciente){
  * @return
  */
 void DirectorioPacientes::mostrarPacientes(){
+    struct timespec pause;
+    pause.tv_sec = 0;
+    pause.tv_nsec = 300000000;
     for (int i=0;i<numPacientes;i++){
-        cout << "Numero de paciente: " << i+1 << endl
-                << "Nombre: " << listaPacientes[i]->getNombre() << endl
-                << "Edad: " << listaPacientes[i]->getEdad() << endl
-                << "Peso: " << listaPacientes[i]->getPeso() << " kg" << endl;
-        sleep(1);
-        cout << "Talla: " << listaPacientes[i]->getTalla() << " m" << endl
-                << "IMC: " << listaPacientes[i]->getImc() << endl
-                << "Requerimiento energetico: " 
-                << listaPacientes[i]->getReqEnergia() << "Kcal" << endl
-                << "Actividad fisica: " << listaPacientes[i]->getActFisica()
-                << endl;
-        sleep(1);
-        cout << "Numero: " << listaPacientes[i]->getNumero() << endl
-                << "Objetivo: " << listaPacientes[i]->getObjetivo() << endl
-                << "Correo: " << listaPacientes[i]->getCorreo() << endl
-                << "Cita: " << listaPacientes[i]->getCita() << endl
-                << endl << endl;
-        sleep(1);
+        cout << "Numero de paciente: " << i+1 << endl;
+        nanosleep(&pause, NULL);
+        cout << "Nombre: " << listaPacientes[i]->getNombre() << endl;
+        nanosleep(&pause, NULL);
+        cout << "Edad: " << listaPacientes[i]->getEdad() << endl;
+        nanosleep(&pause, NULL);
+        cout << "Peso: " << listaPacientes[i]->getPeso() << " kg" << endl;
+        nanosleep(&pause, NULL);
+        cout << "Talla: " << listaPacientes[i]->getTalla() << " m" << endl;
+        nanosleep(&pause, NULL);
+        cout << "IMC: " << listaPacientes[i]->getImc() << endl;
+        nanosleep(&pause, NULL);
+        cout << "Requerimiento energetico: ";
+        nanosleep(&pause, NULL);
+        cout << listaPacientes[i]->getReqEnergia() << "Kcal" << endl;
+        nanosleep(&pause, NULL);
+        cout << "Actividad fisica: " << listaPacientes[i]->getActFisica();
+        cout<< endl;
+        nanosleep(&pause, NULL);
+        cout << "Numero: " << listaPacientes[i]->getNumero() << endl;
+        nanosleep(&pause, NULL);
+        cout << "Objetivo: " << listaPacientes[i]->getObjetivo() << endl;
+        nanosleep(&pause, NULL);
+        cout << "Correo: " << listaPacientes[i]->getCorreo() << endl;
+        nanosleep(&pause, NULL);
+        cout << "Cita: " << listaPacientes[i]->getCita() << endl << endl;
+        nanosleep(&pause, NULL);
     }
 }
 
@@ -94,7 +125,7 @@ void DirectorioPacientes::mostrarPacientes(){
  * @return
  */
 void DirectorioPacientes::mostrarPacientes(int i){
-    cout << "Numero de paciente: " << i+1 << endl << endl
+    cout << "Numero de paciente - " << i+1 << endl << endl
          << "Nombre: " << listaPacientes[i]->getNombre() << endl
          << "Edad: " << listaPacientes[i]->getEdad() << endl
          << "Peso: " << listaPacientes[i]->getPeso() << " kg" << endl
@@ -107,19 +138,17 @@ void DirectorioPacientes::mostrarPacientes(int i){
          << "Numero: " << listaPacientes[i]->getNumero() << endl
          << "Objetivo: " << listaPacientes[i]->getObjetivo() << endl
          << "Correo: " << listaPacientes[i]->getCorreo() << endl
-         << "Cita: " << listaPacientes[i]->getCita() << endl 
-         << endl << endl;
+         << "Cita: " << listaPacientes[i]->getCita() << endl;
 }
 
 /**
- * Cambia la dieta de un paciente
+ * getter numPacientes
  * 
- * @param int i, Menu *dieta
- * @return
+ * @param
+ * @return int numPacientes
  */
-
-void DirectorioPacientes::cambiarDietaPaciente(int i, Menu *dieta){
-    listaPacientes[i]->agregaDieta(dieta);
+int DirectorioPacientes::getNumPacientes(){
+    return numPacientes;
 }
 
 #endif

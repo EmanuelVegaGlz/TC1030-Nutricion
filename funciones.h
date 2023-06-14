@@ -42,10 +42,10 @@ int validarOpcion(int opcion, int min, int max){
  * @return
  */
 void imprimirOpciones(){
-     cout << "1: Ver el directorio de pacientes" << endl
-          << "2: Agendarle una cita a un paciente" << endl
-          << "3: Agregar paciente al directorio" << endl
-          << "4: Proporcionarle menus a tus pacientes" << endl;
+     cout << "1.- Ver el directorio de pacientes" << endl
+          << "2.- Agendarle una cita a un paciente" << endl
+          << "3.- Agregar paciente al directorio" << endl
+          << "4.- Proporcionarle menus a tus pacientes" << endl;
 }
 
 /**
@@ -55,10 +55,12 @@ void imprimirOpciones(){
  * @return
  */
 void mensajeBienvenida(){
-    cout << "Bienvenida Dra. al nutri programa" << endl
+    cout << "Bienvenida Dra. al nutri programa" << endl << endl
          << "En el que cuentas con un directorio de tus paciente" << endl
-         << "El programa calculara el IMC y el REE de tus pacientes" << endl
-         << "Tambien podras agendar citas y proporcionarles menus" << endl
+         << "el programa calculara el IMC y el REE de tus pacientes," << endl
+         << "tambien podras agendar citas y proporcionarles menus" << endl
+         << "de igual manera crear nuevos menus y agregar pacientes" << endl
+         << endl
          << "Ingresa el numero de la opcion que deseas realizar" << endl
          << endl;
 }
@@ -85,7 +87,9 @@ void mensajeActFisica(){
  * @return
  */
 void aviso(){
-     cout << "IMPORTANTE: Solo ingresar numeros" << endl;
+
+     cout << endl
+          << "IMPORTANTE: Solo ingresar numeros: ";
 }
 
 /**
@@ -95,7 +99,7 @@ void aviso(){
  * @param
  * @return
  */
-void mensajeSexoPaciente(){
+void mensajeGeneroPaciente(){
      cout << "Ingresa la opcion para el sexo del paciente" << endl
           << "1: Mujer" << endl
           << "2: Hombre" << endl;
@@ -108,10 +112,22 @@ void mensajeSexoPaciente(){
  * @return
  */
 void mensajeOpcionesMenu(){
-     cout << "Desea agrear alguno de estos menus" << endl
+     cout << endl << "Desea agrear alguno de estos menus" << endl
           << "al paciente o desea crear un menu nuevo:" << endl
           << "1: Agregar un menu existente" << endl
           << "2: Crear un menu" << endl;
+}
+
+/**
+ * Funcion para imprimir separacion entre opciones ejecutadas
+ * 
+ * @param
+ * @return
+ */
+void encabezado(){
+     cout << endl 
+          << "_______________________________________________________________"
+          << endl;
 }
 
 #endif

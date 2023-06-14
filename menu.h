@@ -5,7 +5,8 @@
  * Nombre: Emanuel Josué Vega González.
  * ID: A01710366.
  * 
- * Clase Menu
+ * Clase Menu, sirve para instanciar objetos de tipo Menu en el programa
+ * para que el usuario pueda asignarle menus a sus pacientes
  */
 
 #ifndef MENU_H_
@@ -18,12 +19,28 @@ using namespace std;
 
 class Menu{
   private:
+    // Atributos de la clase
     float calorias;
     string platillos[5];
 
   public:
+    //Metodos de la clase
+
+    /**
+     * Constructor por default
+     * 
+     * @param
+     * @return
+     */
     Menu():calorias(0),platillos(){};
     
+    /**
+     * Constructor con parametros que recibe las calorias y los platillos
+     * 
+     * @param float: calorias, string: p1 desayuno, string: colacion, 
+     *               string: p3 comida, string: p4 colacion, string: p5 cena
+     * @return
+     */
     Menu(float cal, string p1, string p2, string p3, string p4, string p5):
         calorias(cal){
         platillos[0]=p1;
@@ -33,6 +50,12 @@ class Menu{
         platillos[4]=p5;
     }
 
+    /**
+     * Constructor con parametros que recibe las calorias y un arrego de platillos
+     * 
+     * @param float: calorias, string: plat[5]
+     * @return
+     */
     Menu(float cal, string plat[5]):calorias(cal){
         for(int i=0;i<5;i++){
             platillos[i]=plat[i];

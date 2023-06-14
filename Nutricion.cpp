@@ -13,10 +13,11 @@
 
 //Bibliotecas
 
-#include <iostream>                // Para entradas y salidas
+#include <iostream>               // Para entradas y salidas
 #include <string>                  // Tipo de dato string
 #include <sstream>                 // Para cadenas de strings
 #include <unistd.h>                // Para funciones con el SO (sleep)
+#include <time.h>                  // Para funciones con el SO (nanosleep)
 #include "DatosPaciente.h"         // Clase DatosPaciente
 #include "DirectorioPacientes.h"   // Clase DirectorioPacientes
 #include "menu.h"                  // Clase Menu
@@ -79,7 +80,7 @@ int main(){
      Menu * listaMenus[25];
      listaMenus[0] = menu1;
      listaMenus[1] = menu2;
-     int indiceMenu = 2;
+     int indiceMenu = 1;
 
      /*
       * Agregacion de los objetos de la clase menus al objeto
@@ -93,9 +94,10 @@ int main(){
      directorio.agregarPaciente(juanito);
 
      // Mensaje de bienvenida y opciones que tiene el usuario
+     encabezado();
      mensajeBienvenida();
      imprimirOpciones();
-     cout << "IMPORTANTE: Solo ingresar numeros" << endl;
+     aviso();
      
      int opcion;
      cin >> opcion;
@@ -103,14 +105,13 @@ int main(){
 
      while (opcion >= 1 && opcion <= 5)
      {
-          switch (opcion)
+          encabezado();
+          switch(opcion)
           {
                case 1:{
                     // Ver el directorio de pacientes
                     directorio.mostrarPacientes();
-               
-               break;
-               }
+               break;}
 
                case 2:{
                     // Agendarle una cita a un paciente
@@ -158,40 +159,41 @@ int main(){
                          << directorio.listaPacientes[num-1]->getCorreo()
                          << endl;
                     sleep(1);
-
-               break;   
-               }
+               break;}
 
                case 3:{
                     // Agregar paciente al directorio
-                    cout << "Ingresa el nombre del paciente:" << endl;
+                    cout << "Ingresa el nombre del paciente" << endl;
                     string nombre;
                     getline(cin >> ws, nombre);
 
-                    cout << "Ingresa la edad del paciente:" << endl;
+                    cout << "Ingresa la edad del paciente" << endl;
                     aviso();
                     int edad;
                     cin >> edad;
 
-                    cout << "Ingresa el peso del paciente en kg:" << endl;
+                    cout << "Ingresa el peso del paciente en kg" << endl;
                     aviso();
                     float peso;
                     cin >> peso;
 
-                    cout << "Ingresa la talla del paciente en m:" << endl;
+                    cout << "Ingresa la talla del paciente en m" << endl;
                     aviso();
                     float talla;
                     cin >> talla;
 
-                    cout << "Ingresa el numero celular del paciente:" << endl;
+                    cout << "Ingresa el numero celular del paciente" << endl;
                     string numero;
-                    getline(cin >> ws, numero);
+                    cin >> numero;
+                    
+                    //getline(cin >> ws, numero);
 
-                    cout << "Ingresa el e-mail del paciente:" << endl;
+                    cout << "Ingresa el e-mail del paciente" << endl;
                     string correo;
+                    fflush(stdin);
                     getline(cin >> ws, correo);
 
-                    cout << "Ingresa el objetivo del paciente:" << endl;
+                    cout << "Ingresa el objetivo del paciente" << endl;
                     string objetivo;
                     getline(cin >> ws, objetivo);
 
@@ -201,7 +203,7 @@ int main(){
                     cin >> actFisica;
                     actFisica = validarOpcion(actFisica, 1, 4);
 
-                    mensajeSexoPaciente();
+                    mensajeGeneroPaciente();
                     aviso();
                     int genero;
                     cin >> genero;
@@ -238,8 +240,7 @@ int main(){
                          << "Resumen del paciente agregado:" << endl;
                     directorio.mostrarPacientes(directorio.getNumPacientes()
                                                 -1);
-               break;
-               }
+               break;}
 
                case 4:{
                     // Proporcionarle menus a tus pacientes
@@ -261,7 +262,7 @@ int main(){
                          << endl;
                     sleep(1);
                     
-                    for (int i = 0; i < indiceMenu; i++)
+                    for (int i = 0; i <= indiceMenu; i++)
                     {
                          cout << i+1 << ".- "<<endl 
                               << listaMenus[i]->getPlatillos()
@@ -289,8 +290,44 @@ int main(){
                          string platillos[5];
                          for (int i = 0; i < 5; i++)
                          {
-                              cout << "Ingresa el platillo " << i+1 << endl;
-                              getline(cin >> ws, platillos[i]);
+                              switch (i)
+                              {
+                                   case 0:{
+                                        cout << "Ingresa el desayuno" << endl;
+                                        string des;
+                                        getline(cin >> ws, des);
+                                        platillos[i] = "Desayuno: " + des;
+                                   break;}
+
+                                   case 1:{
+                                        cout << "Ingresa la colacion" << endl;
+                                        string col;
+                                        getline(cin >> ws, col);
+                                        platillos[i] = "Colacion: " + col;
+                                   break;}
+
+                                   case 2:{
+                                        cout << "Ingresa la comida" << endl;
+                                        string com;
+                                        getline(cin >> ws, com);
+                                        platillos[i] = "Comida: " + com;
+                                   
+                                   break;}
+
+                                   case 3:{
+                                        cout << "Ingresa la colacion" << endl;
+                                        string col;
+                                        getline(cin >> ws, col);
+                                        platillos[i] = "Colacion: " + col;
+                                   break;}
+
+                                   case 4:{
+                                        cout << "Ingresa la cena" << endl;
+                                        string cen;
+                                        getline(cin >> ws, cen);
+                                        platillos[i] = "Cena: " + cen;
+                                   break;}
+                              }
                          }
 
                          cout << "Ingresa el numero de calorias del menu"
@@ -301,6 +338,7 @@ int main(){
                          Menu *menu = new Menu(calorias, platillos);
                          directorio.listaPacientes[numPaciente-1]->
                          agregaDieta(menu);
+                         listaMenus[indiceMenu+1] = menu;
                     }
 
                     cout << "Menu agregado exitosamente" << endl
@@ -310,12 +348,14 @@ int main(){
                     directorio.listaPacientes[numPaciente-1]->imprimirDieta();
                     cout << endl << endl;
                          
-               break;  
-               }
+               break;}
           }
+          sleep(1);
+          encabezado();
           cout << "Que mas deseas hacer" << endl << endl;
           imprimirOpciones();
-          cout << "Otro numero: Salir del programa" << endl;          
+          cout << "Otro numero -> Salir del programa" << endl;
+          aviso();          
           cin >> opcion;
      }
      return 0;
