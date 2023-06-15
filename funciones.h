@@ -5,11 +5,13 @@
  * Nombre: Emanuel Josué Vega González.
  * ID: A01710366.
  * 
- * Archivo: funciones.h
+ * Archivo de funciones, la funcion principar es validarOpcion, la demas son
+ * para imprimir mensajes en pantalla y tratar de reducir el codigo en el main
  */
 #ifndef FUNCIONES_H_
 #define FUNCIONES_H_
 
+// Bibliotecas
 #include <iostream>
 #include <string>
 #include "DatosPaciente.h"
@@ -45,7 +47,8 @@ void imprimirOpciones(){
      cout << "1.- Ver el directorio de pacientes" << endl
           << "2.- Agendarle una cita a un paciente" << endl
           << "3.- Agregar paciente al directorio" << endl
-          << "4.- Proporcionarle menus a tus pacientes" << endl;
+          << "4.- Proporcionarle menus a tus pacientes" << endl
+          << "5.- Modificar/Actualizar datos de un paciente" << endl;
 }
 
 /**
@@ -72,7 +75,7 @@ void mensajeBienvenida(){
  * @return
  */
 void mensajeActFisica(){
-     cout << "Ingresa el tipo de actividad fisica del paciente"
+     cout << endl << "Ingresa el tipo de actividad fisica del paciente"
           << endl
           << "1: Sedentaria" << endl
           << "2: Poco activa" << endl
@@ -88,8 +91,7 @@ void mensajeActFisica(){
  */
 void aviso(){
 
-     cout << endl
-          << "IMPORTANTE: Solo ingresar numeros: ";
+     cout << "IMPORTANTE: Solo ingresar numeros: ";
 }
 
 /**
@@ -100,7 +102,7 @@ void aviso(){
  * @return
  */
 void mensajeGeneroPaciente(){
-     cout << "Ingresa la opcion para el sexo del paciente" << endl
+     cout << endl << "Ingresa la opcion para el sexo del paciente" << endl
           << "1: Mujer" << endl
           << "2: Hombre" << endl;
 }

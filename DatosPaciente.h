@@ -5,18 +5,19 @@
  * Nombre: Emanuel Josué Vega González.
  * ID: A01710366.
  *
- * Clase abstracta DatosPaciente, que es la clase padre de Hombre y Mujer     
+ * Clase abstracta DatosPaciente, que es la clase padre de Hombre y Mujer   
  */
 
 #ifndef DATOS_PACIENTE_H_
 #define DATOS_PACIENTE_H_
 
+// Bibliotecas
 #include<string>
 #include<math.h>
 #include<iostream>
 #include<unistd.h>
+#include <time.h>
 #include "menu.h"
-
 
 using namespace std;
 
@@ -27,11 +28,10 @@ class DatosPaciente{
   protected:
 
     // Atributos de la clase
-    float peso, talla, imc, reqEnergia, actFisica;
-    int edad;
-    string nombre, objetivo, correo, numero, cita;
     Menu *dieta[5];
-    int numDieta;
+    string nombre, numero, correo, objetivo, cita;
+    float peso, talla, imc, reqEnergia, actFisica;
+    int edad, numDieta;
 
   public:
 
@@ -42,28 +42,29 @@ class DatosPaciente{
     float getReqEnergia();
     float getActFisica();
     int getEdad();
+    int getNumDieta();
     string getNumero();
     string getNombre();
     string getObjetivo();
     string getCorreo();
     string getCita();
     Menu getDieta();
-    
-    
-    void setPeso(float);
-    void setTalla(float);
+
     void setImc();
     virtual void setReqEnergia() = 0;
     virtual void setActFisica(int) = 0;
+    void agregaDieta(Menu*);
+    void imprimirDieta();
+    void imprimirDieta(int); 
+
+    void setPeso(float);
+    void setTalla(float);
     void setEdad(int);
     void setNumero(string);
     void setNombre(string);
     void setObjetivo(string);
     void setCorreo(string);
     void setCita(string);
-    void agregaDieta(Menu*);
-    void imprimirDieta();
-    void imprimirDieta(int);
 
     //Constructores
     
@@ -161,6 +162,16 @@ int DatosPaciente::getEdad(){
 }
 
 /**
+ * getter numDieta
+ *
+ * @param
+ * @return int: Numero de dietas que tiene el paciente
+*/
+int DatosPaciente::getNumDieta(){
+  return numDieta;
+}
+
+/**
  * getter numero
  *
  * @param
@@ -243,7 +254,7 @@ void DatosPaciente::setTalla(float tall){
 }
 
 /**
- * setter imc
+ * setter imc dividiendo el peso entre la talla al cuadrado
  *
  * @param
  * @return
@@ -313,7 +324,8 @@ void DatosPaciente::setCita(string ci){
 }
 
 /**
- * agregar dieta
+ * Agregar dieta: Se agrega una dieta al paciente siempre y cuando no tenga
+ * mas de 5 dietas asociadas.
  * 
  * @param Menu: Dieta que se le agrega al paciente
  * @return
@@ -330,7 +342,7 @@ void DatosPaciente::agregaDieta(Menu *d){
 }
 
 /**
- * imprimir dieta del paciente
+ * imprimirDieta: Imprime todas la dietas que el paciente tenga
  * 
  * @param
  * @return
@@ -338,15 +350,15 @@ void DatosPaciente::agregaDieta(Menu *d){
 void DatosPaciente::imprimirDieta(){
     struct timespec pause;
     pause.tv_sec = 0;
-    pause.tv_nsec = 300000000;
-    for(int i=0;i<numDieta;i++){
-        cout << "Dieta " << i+1 << endl;
+    pause.tv_nsec = 200000000;
+    for(int i = 0; i < numDieta; i++){
+        cout << "Dieta " << i+1 << endl << endl;
         nanosleep(&pause, NULL);
-        cout << "Calorias: " << dieta[i]->getCalorias() << endl;
+        cout << "Calorias: " << dieta[i]->getCalorias() << endl << endl;
         nanosleep(&pause, NULL);
         cout << "Platillos: " << endl;
         nanosleep(&pause, NULL);
-        for(int j=0;j<5;j++){
+        for(int j = 0; j < 5; j++){
             cout << dieta[i]->getPlatillos(j) << endl;
             nanosleep(&pause, NULL);
         }
@@ -355,7 +367,8 @@ void DatosPaciente::imprimirDieta(){
 }
 
 /**
- * imprimir un platillo de la dieta del paciente
+ * Sobrecarga de la fucnión anterior para solamente imprimir una dieta
+ * cuando recibe un int como parametro
  * 
  * @param int: Platillo que se quiere imprimir de los 5 que conforma el menu
  * @return
@@ -398,7 +411,9 @@ class Mujer : public DatosPaciente{
            string corr):DatosPaciente(pes, ta, eda, num, nom, obj, corr){};
     
     /**
-    * setter reqEnergia
+    * setter reqEnergia: usando la formula predictiva IOM cambia de acuerdo
+    * al sexo del paciente es por eso que se definio la clase abstracta 
+    * datosPaciente y se sobreescribieron dos metodos en las clases hijas
     *
     * @param
     * @return
@@ -408,7 +423,8 @@ class Mujer : public DatosPaciente{
     }
 
     /**
-    * setter actFisica
+    * setter actFisica: De igual forma que el metodo anterior, los indices
+    * de actividad fisica son diferentes para hombres y mujeres
     *
     * @param
     * @return
@@ -454,22 +470,25 @@ class Hombre: public DatosPaciente{
             string corr):DatosPaciente(pes, ta, eda, num, nom, obj, corr){};
     
     /**
-    * setter reqEnergia
+    * setter reqEnergia: usando la formula predictiva IOM cambia de acuerdo
+    * al sexo del paciente es por eso que se definio la clase abstracta 
+    * datosPaciente y se sobreescribieron dos metodos en las clases hijas
     *
     * @param
     * @return
     */
-    void setReqEnergia()override{
+    void setReqEnergia(){
         reqEnergia = 662-(9.53*edad)+(actFisica*(15.91*peso+539*talla));
     }
 
     /**
-    * setter actFisica
+    * setter actFisica: De igual forma que el metodo anterior, los indices
+    * de actividad fisica son diferentes para hombres y mujeres
     *
     * @param
     * @return
     */
-    void setActFisica(int act)override{
+    void setActFisica(int act){
         if(act == 1)
         actFisica = 1;
         if(act == 2)

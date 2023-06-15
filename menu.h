@@ -12,6 +12,7 @@
 #ifndef MENU_H_
 #define MENU_H_
 
+// Bibliotecas
 #include<string>
 using namespace std;
 
@@ -57,7 +58,7 @@ class Menu{
      * @return
      */
     Menu(float cal, string plat[5]):calorias(cal){
-        for(int i=0;i<5;i++){
+        for(int i = 0; i < 5; i++){
             platillos[i]=plat[i];
         }
     }
@@ -89,7 +90,7 @@ float Menu::getCalorias(){
  */
 string Menu::getPlatillos(){
     string plat;
-    for(int i=0;i<5;i++){
+    for(int i = 0; i < 5; i++){
         plat+=platillos[i]+"\n";
     }
     return plat;
