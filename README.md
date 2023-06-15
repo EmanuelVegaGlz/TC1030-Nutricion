@@ -25,7 +25,7 @@ Ya se encuentre en el proyecto de pueden observar en:
   
     28, 32, (166:174)
   
-#### Archivo *Nutricion.cpp*. lineas:
+#### Archivo *Nutricion.cpp*, lineas:
   
      (44:53), (59:61), 128, 145, (152:159), (217:219), (231:233),
 
@@ -61,7 +61,7 @@ En los constructores de las clases y en los métodos de las siguientes clases se
 •	*DatosPaciente.h*: 362, 381(int)
 
 -	Archivo *DirectorioPacientes.h*: Método **mostrarPacientes() – mostrarPacientes(int)**
--
+
 	Encabezado: 66-67
 
 	Declaración del Método: 84-164
@@ -145,6 +145,7 @@ El programa consta de un menú principal que tiene 5 opciones:
 - 5.- Modificar/Actualizar datos de un paciente. Se selecciona un paciente y se pueden cambiar sus datos mediante setters, menos las citas que hay una (opción aparte), el REE, el IMC o el factor de actividad física, ya que lo calcula el programa, sin embargo si el usuario cambia el peso la talla o la edad se recalculan los 2 parámetro anteriores.
 ## Instrucciones
 - Descargar los archivos y colocarlos en una misma carpeta.
+- En consola ve a la ruta en donde se encuentran los archivos descomprimidos
 
 **Opción 1:**
 
@@ -163,6 +164,37 @@ El programa consta de un menú principal que tiene 5 opciones:
 Al momento de ingresar lo inputs, el tipo de dato de la variable debe coincidir con la entrada, si ingresas un string o algún carácter cuando se soliciten valores numéricos el programa deja de funcionar.
 
 De igual forma los archivos del repositorio al momento de descargarlos y descomprimirlos deben de estar en la misma carpeta, de lo contrario no compilara.
+
+Si se desea modificar el programa es importante que a la hora de crear un objeto, los parámetros que se les pasen a los constructores sean en el orden correcto, de lo contrario no funcionara el programa.
+
+Ejemplos:
+
+    Mujer(float pes, float ta, int eda, string num, string nom, string obj, string corr);
+
+    Hombre(float pes, float ta, int eda, string num, string nom, string obj,  string corr);
+
+Se sugiere que para crear un directorio se cree con el constructor vacío:
+
+    DirectorioPacientes()
+
+Al menos que ya tengas un arreglo lleno de apuntadores de objetos de pacientes, utiliza el siguiente constructor:
+
+    DirectorioPacientes(DatosPaciente *pacientes[100]);
+
+En cuanto a la creación de objetos de clase Menu, hay tres opciones:
+
+Crearlo vacio:
+
+    Menu()
+
+Con un arreglo de 5 comidas:
+
+    Menu(float cal, string plat[5]);
+
+Y con 5 platillos diferentes del tipo de dato string:
+
+    Menu(float cal, string p1, string p2, string p3, string p4, string p5)
+
 
 ## Sugerencia
 Intenta probar todas las opciones del menú, ya que dentro de las 5 opciones principales se tienen pequeñas variantes, como el hecho de crear el menú o de asignarle al paciente alguno de los creados anteriormente.
