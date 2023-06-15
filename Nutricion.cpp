@@ -4,7 +4,7 @@
  * Profesor: Benjamín Valdés Aguirre.
  * Nombre: Emanuel Josué Vega González.
  * ID: A01710366.
- * 22/05/2022
+ * 14/05/2023
  *
  * El programa está pensado para ayudar a una nutriologa en su clínica, en el
  * cual se calculen datos acerca del paciente, como su IMC, su requerimiento 
